@@ -165,4 +165,23 @@ More recently, JS has gained async iteration & async generators.
 
 Async generators have one twist to generators: the returned `value` of `{ value, done }` is a promise.
 
+```
+async function * minutes(){
+	let n = 0
+	let defer = Promise.defer()
+	setInterval(function(){
+		defer.resolve(++n)
+	}, 60000}
+	while(true){
+		yield defer.promise
+		defer = Promise.defer()
+	}
+}
+for await( let n of minutes()){
+	console.log(n) //=> 1 .... 2 ....
+}
+```
 
+## Libraries
+
+https://github.com/bhoriuchi/async-iterator-from
